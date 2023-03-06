@@ -1,46 +1,45 @@
 import React, { useState } from "react";
-import { ApiGet } from "../Api/ApiService";
+import { searchForActors, searchForShows } from "../Api/ApiService";
+import Search from "../Components/Search";
 
 const Homepage = () => {
-  const [searchInput, setSearchInput] = useState("");
-  const [apiData, setApiData] = useState([]);
+  const [apiData, setApiData] = useState(null);
   const [apiError, setApiError] = useState(null);
-  const submitHandler = async (e) => {
-    e.preventDefault();
-    setSearchInput("");
+
+  const onSearchSubmitHandler = async ({ q, searchOption }) => {
     try {
       setApiError(null);
-      const res = await ApiGet(`/search/shows?q=${searchInput}`);
-      setApiData(res);
+      if (searchOption === "shows") {
+        const res = await searchForShows(q);
+        setApiData(res);
+      } else {
+        const res = await searchForActors(q);
+        setApiData(res);
+      }
     } catch (error) {
       setApiError(error);
     }
   };
+
   const renderApiData = () => {
-    if (apiData) {
-      return apiData.map((data) => (
-        <li key={data.show.id}>{data.show.name}</li>
-      ));
-    }
     if (apiError) {
       return <div>Error occured : {apiError.message}</div>;
     }
+    if (apiData) {
+      return apiData[0].show
+        ? apiData.map((data) => <div key={data.show.id}>{data.show.name}</div>)
+        : apiData.map((data) => (
+            <div key={data.person.id}>{data.person.name}</div>
+          ));
+    }
+    return null;
   };
 
   return (
-    <div>
-      <form onSubmit={submitHandler}>
-        <input
-          type="text"
-          value={searchInput}
-          onChange={(e) => {
-            setSearchInput(e.target.value);
-          }}
-        />
-        <button type="submit">Search</button>
-      </form>
+    <>
+      <Search onSearch={onSearchSubmitHandler} />
       <div>{renderApiData()}</div>
-    </div>
+    </>
   );
 };
 
