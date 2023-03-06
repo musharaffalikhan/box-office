@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getShowsById } from "../Api/ApiService";
 import Cast from "../Components/Shows and actors/Cast";
 import Details from "../Components/Shows and actors/Details";
@@ -9,6 +9,7 @@ import ShowMainData from "../Components/Shows and actors/ShowMainData";
 
 const Show = () => {
   const { showId } = useParams();
+  const navigate = useNavigate();
   const { data: showData, error: showDataError } = useQuery({
     queryKey: ["show", showId],
     queryFn: () => getShowsById(showId),
@@ -38,6 +39,15 @@ const Show = () => {
     return (
       <>
         <div>
+          <button
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            Back
+          </button>
+        </div>
+        <div>
           <ShowMainData
             image={showData.image}
             rating={showData.rating}
@@ -54,12 +64,12 @@ const Show = () => {
           />
         </div>
         <div>
-            <h2>Seasons</h2>
-            <Seasons seasons={showData._embedded.seasons}/>
+          <h2>Seasons</h2>
+          <Seasons seasons={showData._embedded.seasons} />
         </div>
         <div>
-            <h2>Cast</h2>
-            <Cast cast={showData._embedded.cast}/>
+          <h2>Cast</h2>
+          <Cast cast={showData._embedded.cast} />
         </div>
       </>
     );
