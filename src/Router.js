@@ -4,6 +4,7 @@ import MainLayout from "./Components/MainLayout";
 import Homepage from "./Pages/Homepage";
 
 import PageNotFound from "./Pages/PageNotFound";
+import Show from "./Pages/Show";
 import Starred from "./Pages/Starred";
 
 const Router = () => {
@@ -13,9 +14,10 @@ const Router = () => {
         <Routes>
           <Route element={<MainLayout />}>
             <Route path="/" element={<Homepage />} />
-            <Route path="*" element={<PageNotFound />} />
             <Route path="/starred" element={<Starred />} />
           </Route>
+          <Route path="*" element={<PageNotFound />} />
+          <Route path="/show/:showId" element={<Show/>}/> 
         </Routes>
       </BrowserRouter>
     </>
