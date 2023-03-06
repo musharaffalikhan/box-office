@@ -1,8 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const ShowCard = ({ name, image, id, summary }) => {
-    const modSummary = summary ? summary.split(' ').slice(0, 10).join(' ').replace(/<.+?>/g, ''):"No description"
+
+const ShowCard = ({ name, image, id, summary,onClick }) => {
+
+  const modSummary = summary
+    ? summary.split(" ").slice(0, 10).join(" ").replace(/<.+?>/g, "")
+    : "No description";
   return (
     <div>
       <div>
@@ -12,7 +16,9 @@ const ShowCard = ({ name, image, id, summary }) => {
       <p>{modSummary}</p>
       <div>
         <Link to={`/show/${id}`}>Read more</Link>
-        <button type="button">Star me</button>
+        <button type="button" onClick={()=>{onClick(id)}}>
+          Star me
+        </button>
       </div>
     </div>
   );

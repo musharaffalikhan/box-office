@@ -1,7 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { starredSliceActions } from "../../Store/StarredSlice";
+
 import ShowCard from "./Reusable Cards/ShowCard";
 
 const ShowGrid = ({ shows }) => {
+  const isStarred = useSelector((state) => state.starred.ids);
+  const dispatch = useDispatch();
+  console.log(isStarred);
+
+  const onStarmeClick = (newId) => {
+    if (isStarred.includes(newId)) {
+      dispatch(starredSliceActions.unStar(newId));
+    }
+    if (!isStarred.includes(newId)) {
+      dispatch(starredSliceActions.star(newId));
+    }
+    return;
+  };
+  useEffect(()=>{
+    const storedIds = localStorage.getItem('starredShow');
+    if(storedIds){
+      dispatch(starredSliceActions.setIds(JSON.parse(storedIds)))
+    }
+  },[dispatch]);
+  
+
   return (
     <>
       {shows.map((data) => (
@@ -13,6 +37,7 @@ const ShowGrid = ({ shows }) => {
             data.show.image ? data.show.image.medium : "/Imagenotfound.png"
           }
           summary={data.show.summary}
+          onClick={onStarmeClick}
         />
       ))}
     </>
