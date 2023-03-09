@@ -38,6 +38,7 @@ const ShowGrid = ({ shows }) => {
           }
           summary={data.show.summary}
           onClick={onStarmeClick}
+          isStarred={isStarred.includes(data.show.id)}
         />
       ))}
     </>
