@@ -6,6 +6,9 @@ import Search from "../Components/Search";
 import ActorsGrid from "../Components/Shows and actors/ActorsGrid";
 import ShowGrid from "../Components/Shows and actors/ShowGrid";
 
+
+
+
 const Homepage = () => {
 
   // Normal Data fetching method
