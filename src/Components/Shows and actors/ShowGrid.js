@@ -7,7 +7,7 @@ import ShowCard from "./Reusable Cards/ShowCard";
 const ShowGrid = ({ shows }) => {
   const isStarred = useSelector((state) => state.starred.ids);
   const dispatch = useDispatch();
-  console.log(isStarred);
+ 
 
   const onStarmeClick = (newId) => {
     if (isStarred.includes(newId)) {
