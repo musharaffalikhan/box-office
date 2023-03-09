@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import Search from "../Components/Search";
 import ActorsGrid from "../Components/Shows and actors/ActorsGrid";
 import ShowGrid from "../Components/Shows and actors/ShowGrid";
+import { TextCenter } from "../Components/common/TextCenter";
 
 
 
@@ -47,10 +48,10 @@ const Homepage = () => {
 
   const renderApiData = () => {
     if (apiError) {
-      return <div>Error occured : {apiError.message}</div>;
+      return <TextCenter>Error occured : {apiError.message}</TextCenter>;
     }
     if (apiData?.length === 0) {
-      return <div>No results</div>;
+      return <TextCenter>No results</TextCenter>;
     }
     if (apiData) {
       return apiData[0].show ? (

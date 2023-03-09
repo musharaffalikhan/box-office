@@ -5,6 +5,7 @@ import { getShowsByIds } from "../Api/ApiService";
 import ShowGrid from "../Components/Shows and actors/ShowGrid";
 import { useEffect } from "react";
 import { starredSliceActions } from "../Store/StarredSlice";
+import { TextCenter } from "../Components/common/TextCenter";
 
 const Starred = () => {
   const dispatch = useDispatch();
@@ -25,19 +26,17 @@ const Starred = () => {
   }, [dispatch]);
 
   if (starredShows?.length === 0) {
-    return <div>No shows are starred</div>;
+    return <TextCenter>No shows are starred</TextCenter>;
   }
 
   if (starredShows?.length > 0) {
     return <ShowGrid shows={starredShows} />;
   }
   if (starredShowsError) {
-    return <div>Error occured : {starredShowsError.message}</div>;
+    return <TextCenter>Error occured : {starredShowsError.message}</TextCenter>;
   }
   return (
-    <div>
-      <h1>hello</h1>
-    </div>
+    <TextCenter>Shows are loading</TextCenter>
   );
 };
 
